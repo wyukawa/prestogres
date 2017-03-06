@@ -19,6 +19,8 @@ SYSTEM_COLUMN_NAMES = set(["oid", "tableoid", "xmin", "cmin", "xmax", "cmax", "c
 def _pg_result_type(presto_type):
     if presto_type == "varchar":  # for old Presto
         return "varchar(255)"
+    elif presto_type == "varchar(0)":
+        return "varchar(255)"
     elif presto_type == "varbinary":
         return "bytea"
     elif presto_type == "double":
@@ -34,6 +36,8 @@ def _pg_result_type(presto_type):
 # convert Presto table column types to PostgreSQL types
 def _pg_table_type(presto_type):
     if presto_type == "varchar":  # for old Presto
+        return "varchar(255)"
+    elif presto_type == "varchar(0)":
         return "varchar(255)"
     elif presto_type == "varbinary":
         return "bytea"
